@@ -12,6 +12,7 @@ from deepgram import (
 )
 from groq import Groq
 from elevenlabs.client import ElevenLabs
+from .personas import get_persona_prompt, get_voice_id, DEFAULT_PERSONA
 
 load_dotenv()
 
@@ -23,25 +24,16 @@ groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 elevenlabs_client = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
 VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")
 
-# The "patient" persona — this is what makes your bot act like a caller
-# instead of just an empty chatbot. We'll build out more personas in Phase 3.
-SYSTEM_PROMPT = """You are Sally Smith, a patient calling a medical clinic's
-automated phone system to book an appointment. You have a mild sore throat
-and want to be seen sometime this week, ideally in the afternoon.
-
-Speak like a real person on the phone: contractions, short sentences, no
-over-explaining. Don't break character or mention you're an AI. Stay focused
-on your goal but respond naturally to whatever the agent says. If the agent
-makes an error, react like a real patient would. Keep responses SHORT —
-one or two sentences max, like real spoken conversation."""
-
 
 @app.post("/voice")
 async def voice(request: Request):
+    persona = request.query_params.get("persona", DEFAULT_PERSONA)
     twiml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <Response>
     <Connect>
-        <Stream url="wss://{PUBLIC_BASE_URL}/media-stream" />
+        <Stream url="wss://{PUBLIC_BASE_URL}/media-stream">
+            <Parameter name="persona" value="{persona}" />
+        </Stream>
     </Connect>
 </Response>"""
     return PlainTextResponse(content=twiml, media_type="application/xml")
@@ -58,12 +50,12 @@ async def generate_reply(conversation_history):
     return response.choices[0].message.content
 
 
-async def text_to_speech(text):
+async def text_to_speech(text, voice_id):
     """Turn the patient's reply into audio, in the exact format Twilio
     expects: 8kHz mono mulaw."""
     audio_generator = elevenlabs_client.text_to_speech.convert(
-        voice_id=VOICE_ID,
-        model_id="eleven_flash_v2_5",  # low-latency model, matters for real-time
+        voice_id=voice_id,
+        model_id="eleven_flash_v2_5",
         text=text,
         output_format="ulaw_8000",
     )
@@ -89,28 +81,48 @@ async def media_stream(websocket: WebSocket):
 
     loop = asyncio.get_event_loop()
     stream_sid = None
-    conversation_history = [{"role": "system", "content": SYSTEM_PROMPT}]
+    conversation_history = []
+    voice_id_for_call = VOICE_ID
 
     dg_connection = deepgram.listen.websocket.v("1")
+
+    utterance_buffer = []
+    is_responding = {"value": False}  # dict so the nested functions can mutate it
 
     def on_transcript(self, result, **kwargs):
         transcript = result.channel.alternatives[0].transcript
         if len(transcript) == 0 or not result.is_final:
             return
+        print(f"   …chunk: {transcript}")
+        utterance_buffer.append(transcript)
 
-        print(f"🗣️  Agent said: {transcript}")
-        conversation_history.append({"role": "user", "content": transcript})
+    def on_utterance_end(self, utterance_end, **kwargs):
+        if not utterance_buffer:
+            return
 
-        # Schedule our response — this runs the think+speak steps without
-        # blocking the audio-receiving loop above
+        if is_responding["value"]:
+            # Our bot is still generating or speaking from the LAST turn —
+            # ignore this trigger instead of starting a second response
+            # that would collide with the one already playing.
+            print("⏸️  Ignoring new utterance — still responding to the last one")
+            utterance_buffer.clear()
+            return
+
+        full_utterance = " ".join(utterance_buffer)
+        utterance_buffer.clear()
+
+        print(f"🗣️  Agent said: {full_utterance}")
+        conversation_history.append({"role": "user", "content": full_utterance})
+
         asyncio.run_coroutine_threadsafe(
-            respond(websocket, stream_sid, conversation_history), loop
+            respond(websocket, stream_sid, conversation_history, voice_id_for_call, is_responding), loop
         )
 
     def on_error(self, error, **kwargs):
         print("❌ Deepgram error:", error)
 
     dg_connection.on(LiveTranscriptionEvents.Transcript, on_transcript)
+    dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
     dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
     dg_options = LiveOptions(
@@ -121,6 +133,8 @@ async def media_stream(websocket: WebSocket):
         channels=1,
         interim_results=True,
         endpointing=750,
+        utterance_end_ms="1000",
+        vad_events=True,
     )
 
     if not dg_connection.start(dg_options):
@@ -134,6 +148,12 @@ async def media_stream(websocket: WebSocket):
 
             if event == "start":
                 stream_sid = message["start"]["streamSid"]
+                custom_params = message["start"].get("customParameters", {})
+                persona_key = custom_params.get("persona", DEFAULT_PERSONA)
+                system_prompt = get_persona_prompt(persona_key)
+                voice_id_for_call = get_voice_id(persona_key, VOICE_ID)
+                conversation_history.append({"role": "system", "content": system_prompt})
+                print(f"🎭 Persona: {persona_key}  |  🔊 Voice: {voice_id_for_call}")
                 print("📞 Call started:", message["start"]["callSid"])
 
             elif event == "media":
@@ -151,19 +171,22 @@ async def media_stream(websocket: WebSocket):
         dg_connection.finish()
 
 
-async def respond(websocket, stream_sid, conversation_history):
+async def respond(websocket, stream_sid, conversation_history, voice_id, is_responding):
     """The 'think + speak' half of the loop: ask Groq for a reply, turn
     it into audio, send it back into the call."""
+    is_responding["value"] = True
     try:
         reply_text = await generate_reply(conversation_history)
         print(f"🤖 Patient says: {reply_text}")
         conversation_history.append({"role": "assistant", "content": reply_text})
 
-        audio_bytes = await text_to_speech(reply_text)
+        audio_bytes = await text_to_speech(reply_text, voice_id)
         await send_audio_to_twilio(websocket, stream_sid, audio_bytes)
 
     except Exception as e:
         print("❌ Error in respond():", e)
+    finally:
+        is_responding["value"] = False
 
 
 @app.get("/")
