@@ -1,0 +1,30 @@
+Persona: ambiguous_request
+Call SID: CA6e952429ba8a609efa47473c15a20435
+Saved: 2026-07-02T18:06:19.497910
+----------------------------------------
+AGENT: this call may be recorded for quality and training purposes
+PATIENT: I need to come in soon, can I get an appointment?
+AGENT: thank you for calling pivotpoint orthopedics would you like to create a demo patient profile
+PATIENT: No, I'm an existing patient, I just need to schedule a visit.
+AGENT: i could help with that to book an appointment
+PATIENT: What's the soonest I can get in, I need to come in as soon as possible.
+AGENT: i understand you want to schedule a visit as soon as possible to help with booking i'll need to create a demo patient profile for you may i have your first and last name
+PATIENT: My name's Priya Patel, but I don't think I need a new profile, like I said, I'm an existing patient.
+AGENT: your patient profile is set up and your date of birth is july fourth two thousand for demo purposes how can i help you today
+PATIENT: I need to see a doctor, can I get an appointment this week?
+AGENT: are you coming in for an urgent concern like pain or a new injury or is this a routine visit this will help me book the right type of appointment for you
+PATIENT: It's not really routine, I'm having some issues I'd rather discuss with the doctor, can I just get an appointment?
+AGENT: thanks for sharing that since you have some issues that need prompt attention would you like to book this as an acute visit for urgent concerns
+PATIENT: Yeah, that sounds right, an acute visit, what's the soonest I can get in?
+AGENT: the soonest available appointments are on monday july sixth would you prefer a morning or afternoon slot i can offer you times with either doctor zidnew lukowski or doctor kelly noble
+PATIENT: Either doctor's fine, what's the earliest morning slot?
+AGENT: the earliest morning slot is at eight fifteen am with doctor ziminyu lukowski on monday july sixth would you like to book that appointment
+PATIENT: Yeah, book that one, 8:15 with Dr. Lukowski.
+AGENT: you have an appointment booked for monday july sixth at eight fifteen am with doctor zee bignew lukovsky at tivit point orthopaedics please bring your photo id
+PATIENT: I'll be there, thanks.
+AGENT: insurance card a list of your current medications and any imaging disks you have
+PATIENT: Got it, I'll bring all that stuff.
+AGENT: you're all
+PATIENT: Bye.
+AGENT: take care goodbye
+PATIENT: You too, bye.

@@ -1,0 +1,20 @@
+Persona: refill
+Call SID: CAb96ae78d669d5061f9f241e6aac1100f
+Saved: 2026-07-02T17:32:44.746027
+----------------------------------------
+AGENT: this call may be recorded for quality and training purposes
+PATIENT: I'm calling about a refill for my prescription, it's for Velazodine, I'm almost out.
+AGENT: thank you for calling pivotpoint orthopedics would you like to create a demo patient profile
+PATIENT: No, I just need a refill on my Velazodine, can you help me with that?
+AGENT: i can help with your refill request to get started would you like to create a demo patient profile i just need your first and last name
+PATIENT: My name's Linda Park, and I don't need a demo profile, just the refill, please.
+AGENT: i understand you need a refill for velacinib to process your request i do need to create a demo patient profile for you this helps the clinic track and manage your prescription would you like me to set that up using your name linda park
+PATIENT: It's Velazodine, not Velacinib, and yeah, fine, set up the profile, let's just get this refill done.
+AGENT: your patient profile has been created and your date of birth is set as july fourth two thousand for demo purposes how may i help you today
+PATIENT: That's not my birthday, just forget the demo stuff, I need my Velazodine prescription refilled, can you do that?
+AGENT: i don't see any medications on file that i can refill for you if you'd like i can connect you to our patient support team for more help would you like to speak with someone now
+PATIENT: I've been getting Velazodine from you guys for months, can you just check again, or yeah, transfer me to someone who can help.
+AGENT: connecting you to a representative please wait
+PATIENT: I'll wait, hopefully they can actually help me with my refill.
+AGENT: hello you've reached the pretty good ai test line goodbye
+PATIENT: Wait, no, I'm trying to get my Velazodine refilled, don't hang up!

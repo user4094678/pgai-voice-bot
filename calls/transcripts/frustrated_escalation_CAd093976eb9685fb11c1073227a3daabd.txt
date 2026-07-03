@@ -1,0 +1,12 @@
+Persona: frustrated_escalation
+Call SID: CAd093976eb9685fb11c1073227a3daabd
+Saved: 2026-07-02T18:10:48.689402
+----------------------------------------
+AGENT: this call may be recorded for quality and training purposes
+PATIENT: I don't care about that, I just wanna know what happened with my appointment last week - no one called to confirm and I showed up for nothing.
+AGENT: thank you for calling pivotpoint orthopaedic would you like to create a demo patient profile
+PATIENT: No, I don't want a demo patient profile, I want to talk to someone about the appointment I had that got messed up last week.
+AGENT: you can scan the qr code at the boost to create a profile later if you change your mind i'll connect you to our clinic support team so you can talk to someone about your appointment please stay on the line connecting you to a representative please wait
+PATIENT: Just hurry up and get me to someone who can help, I've already wasted time showing up to a no-show appointment.
+AGENT: hello you've reached the pretty good ai test line goodbye
+PATIENT: Wait, no, I'm trying to talk to a real person about my messed up appointment, don't hang up on me!

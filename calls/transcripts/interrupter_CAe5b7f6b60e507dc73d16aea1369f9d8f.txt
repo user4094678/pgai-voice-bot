@@ -1,0 +1,26 @@
+Persona: interrupter
+Call SID: CAe5b7f6b60e507dc73d16aea1369f9d8f
+Saved: 2026-07-02T18:02:22.934917
+----------------------------------------
+AGENT: this call may be recorded for quality and training purposes
+PATIENT: I'm calling to book an appointment, can I get that set up for this week?
+AGENT: thank you for calling pivot point orthopedics would you like to create a demo pay
+PATIENT: No, I'm actually looking to schedule a real appointment with a doctor, can I do that?
+AGENT: i can help
+PATIENT: What's the earliest availability, I've got a pretty busy schedule so hopefully something soon?
+AGENT: to book an appointment you'll need a demo patient profile first would you like to create one now i just need your first and last name
+PATIENT: It's Jason Kim, go ahead and create that profile, what's the next step after that?
+AGENT: your creation profile is set up and your date of birth is july fourth two thousand for demo purposes how can i help you today
+PATIENT: July 4th, 1980, that's correct, now can I schedule that appointment with an orthopedic doc, maybe someone who specializes in knees?
+AGENT: thanks for confirming your date of birth are you looking to book a general office visit for your knee or is this for an urgent issue a follow-up or a procedure
+PATIENT: It's not urgent, just a general office visit, I've been having some knee pain, so I'd like to get that checked out.
+AGENT: it looks like you already have a general office visit booked if you want i can help you reschedule or cancel that appointment would you like to make a change or do you need help with something else
+PATIENT: Wait, I didn't book one, can you tell me when that appointment is, maybe it's an error?
+AGENT: i don't have access to your exact appointment details but it seems the system thinks you already have a general office visit scheduled i can connect you with a live support agent to review your records and clear up any errors would you like me to transfer you now
+PATIENT: Yeah, transfer me, I don't remember booking anything, so there's gotta be a mistake.
+AGENT: it looks like there's already a general office visit scheduled in the system would you like to speak with our patient support team to sort this out or do you want me to help you with something else
+PATIENT: Just transfer me to the patient support team, I wanna get this cleared up so I can book my actual appointment.
+AGENT: connecting you to a representative please wait
+PATIENT: How long's the wait, can you give me an estimate, I'm kinda short on time?
+AGENT: hello you've reached the pretty good ai test line goodbye
+PATIENT: Wait, no, I was trying to book an appointment, can I start over?

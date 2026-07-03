@@ -1,0 +1,18 @@
+Persona: reschedule
+Call SID: CA2b9795402b6bb45609dcfa6e31786cac
+Saved: 2026-07-02T17:21:29.050552
+----------------------------------------
+AGENT: this call may be recorded for quality and training purposes
+PATIENT: I'm calling to reschedule my appointment, something's come up at work. Can I change it to a different time?
+AGENT: thank you for call
+PATIENT: What's the soonest I can reschedule for, actually, you know what, just cancel it.
+AGENT: i can help with that before we continue would you like to create a demo patient profile i just need your first and last name
+PATIENT: It's David Okafor, but like I said, just cancel the appointment, don't need to bother with all that.
+AGENT: you have an appointment on friday july tenth with doctor zbigniew lukovsky can you tell me the reason for canceling
+PATIENT: Work's just gotten too crazy, something unexpected came up and I won't be able to make it, that's all.
+AGENT: you'd like to cancel your appointment on friday july tenth with doctor zigniew lukovsky correct
+PATIENT: Yeah, that's right, just go ahead and cancel it.
+AGENT: your appointment on july tenth with doctor lukaszky has been canceled anything else i can help you with today
+PATIENT: No, that's it, thanks.
+AGENT: you're all set a great day
+PATIENT: Thanks, bye.

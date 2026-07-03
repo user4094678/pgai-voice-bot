@@ -2,6 +2,8 @@ import os
 import json
 import base64
 import asyncio
+import datetime
+from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import FastAPI, WebSocket, Request
 from fastapi.responses import PlainTextResponse
@@ -23,6 +25,9 @@ deepgram = DeepgramClient(os.getenv("DEEPGRAM_API_KEY"))
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 elevenlabs_client = ElevenLabs(api_key=os.getenv("ELEVENLABS_API_KEY"))
 VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID")
+
+TRANSCRIPTS_DIR = Path(__file__).resolve().parent.parent / "calls" / "transcripts"
+TRANSCRIPTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 @app.post("/voice")
@@ -81,13 +86,16 @@ async def media_stream(websocket: WebSocket):
 
     loop = asyncio.get_event_loop()
     stream_sid = None
+    call_sid = None
+    persona_key = DEFAULT_PERSONA
     conversation_history = []
     voice_id_for_call = VOICE_ID
+    full_transcript = []
 
     dg_connection = deepgram.listen.websocket.v("1")
 
     utterance_buffer = []
-    is_responding = {"value": False}  # dict so the nested functions can mutate it
+    is_responding = {"value": False}
 
     def on_transcript(self, result, **kwargs):
         transcript = result.channel.alternatives[0].transcript
@@ -101,9 +109,6 @@ async def media_stream(websocket: WebSocket):
             return
 
         if is_responding["value"]:
-            # Our bot is still generating or speaking from the LAST turn —
-            # ignore this trigger instead of starting a second response
-            # that would collide with the one already playing.
             print("⏸️  Ignoring new utterance — still responding to the last one")
             utterance_buffer.clear()
             return
@@ -113,9 +118,10 @@ async def media_stream(websocket: WebSocket):
 
         print(f"🗣️  Agent said: {full_utterance}")
         conversation_history.append({"role": "user", "content": full_utterance})
+        full_transcript.append(f"AGENT: {full_utterance}")
 
         asyncio.run_coroutine_threadsafe(
-            respond(websocket, stream_sid, conversation_history, voice_id_for_call, is_responding), loop
+            respond(websocket, stream_sid, conversation_history, voice_id_for_call, is_responding, full_transcript), loop
         )
 
     def on_error(self, error, **kwargs):
@@ -148,13 +154,14 @@ async def media_stream(websocket: WebSocket):
 
             if event == "start":
                 stream_sid = message["start"]["streamSid"]
+                call_sid = message["start"]["callSid"]
                 custom_params = message["start"].get("customParameters", {})
                 persona_key = custom_params.get("persona", DEFAULT_PERSONA)
                 system_prompt = get_persona_prompt(persona_key)
                 voice_id_for_call = get_voice_id(persona_key, VOICE_ID)
                 conversation_history.append({"role": "system", "content": system_prompt})
                 print(f"🎭 Persona: {persona_key}  |  🔊 Voice: {voice_id_for_call}")
-                print("📞 Call started:", message["start"]["callSid"])
+                print("📞 Call started:", call_sid)
 
             elif event == "media":
                 payload = message["media"]["payload"]
@@ -163,15 +170,40 @@ async def media_stream(websocket: WebSocket):
 
             elif event == "stop":
                 print("📴 Call ended")
+                save_transcript(persona_key, call_sid, full_transcript)
                 break
 
     except Exception as e:
         print("Connection closed:", e)
+        if full_transcript:
+            save_transcript(persona_key, call_sid, full_transcript)
     finally:
         dg_connection.finish()
 
 
-async def respond(websocket, stream_sid, conversation_history, voice_id, is_responding):
+def save_transcript(persona_key, call_sid, full_transcript):
+    """Write this call's full transcript to a .txt file, named so it's
+    easy to match back to the persona and the recording."""
+    if not call_sid:
+        call_sid = "unknown_call"
+    filename = f"{persona_key}_{call_sid}.txt"
+    filepath = TRANSCRIPTS_DIR / filename
+
+    header = (
+        f"Persona: {persona_key}\n"
+        f"Call SID: {call_sid}\n"
+        f"Saved: {datetime.datetime.now().isoformat()}\n"
+        f"{'-' * 40}\n"
+    )
+
+    with open(filepath, "w") as f:
+        f.write(header)
+        f.write("\n".join(full_transcript))
+
+    print(f"💾 Transcript saved: {filepath}")
+
+
+async def respond(websocket, stream_sid, conversation_history, voice_id, is_responding, full_transcript):
     """The 'think + speak' half of the loop: ask Groq for a reply, turn
     it into audio, send it back into the call."""
     is_responding["value"] = True
@@ -179,6 +211,7 @@ async def respond(websocket, stream_sid, conversation_history, voice_id, is_resp
         reply_text = await generate_reply(conversation_history)
         print(f"🤖 Patient says: {reply_text}")
         conversation_history.append({"role": "assistant", "content": reply_text})
+        full_transcript.append(f"PATIENT: {reply_text}")
 
         audio_bytes = await text_to_speech(reply_text, voice_id)
         await send_audio_to_twilio(websocket, stream_sid, audio_bytes)

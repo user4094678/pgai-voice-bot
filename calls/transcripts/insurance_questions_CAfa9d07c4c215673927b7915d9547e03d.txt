@@ -1,0 +1,16 @@
+Persona: insurance_questions
+Call SID: CAfa9d07c4c215673927b7915d9547e03d
+Saved: 2026-07-02T17:48:38.623526
+----------------------------------------
+AGENT: this call may be recorded for quality and training purposes
+PATIENT: What insurance do you guys accept?
+AGENT: thank you for calling pivotpoint orthopaedics would you like to create a demo patient profile i
+PATIENT: No, just looking for info - what are your hours and where are you located?
+AGENT: i can help with
+PATIENT: Do you take Blue Cross, and what are your office hours?
+AGENT: our office hours and insurance details can vary for the most accurate information it's best to check with the front desk or our website would you like me to connect you with someone who can answer your insurance and office hour questions directly
+PATIENT: Yeah, just give me the website, I'll check it myself. What's the address?
+AGENT: i don't have the website link to share by phone but i can give you our location pivot point orthopaedics is located at one two three main street suite two hundred seattle if you need more details the front desk can help in person
+PATIENT: Got it, 123 Main St, Seattle. That's all I need for now, thanks.
+AGENT: you're welcome have a great day
+PATIENT: You too, bye.

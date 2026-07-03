@@ -1,0 +1,46 @@
+Persona: confused_elderly
+Call SID: CA845f91a82a02ab597e9da23581c32529
+Saved: 2026-07-02T17:58:28.050119
+----------------------------------------
+AGENT: this call may be recorded for quality and training purposes
+PATIENT: I didn't quite catch that, could you repeat it for me, please?
+AGENT: thank you for
+PATIENT: You're going too fast, could you slow down a bit, dear?
+AGENT: of course i'll speak more slowly how could i help you today
+PATIENT: I need to make a doctor's appointment, could you tell me... what days are they available?
+AGENT: i can help with that before we check the schedule would you like to create a demo patient profile i just need your first and last name
+PATIENT: My name's Eleanor Whitfield... what's this about a profile, could you explain that again?
+AGENT: your patient profile is set up and your date of birth is july fourth two thousand for demo purposes may i help you today
+PATIENT: July 4th, 1940, that's my birthday... now, about that appointment, could you repeat what I need to do?
+AGENT: thank you eleanor i have your date of birth as july fourth nineteen forty is the main reason for your visit for example is this for a routine checkup a new patient consultation or something urgent
+PATIENT: I'm getting a bit mixed up, could you slow down and repeat that, dear? What was the question again?
+AGENT: no problem eleanor would you like to see the doctor for something urgent a routine checkup or is this your first visit to the clinic
+PATIENT: It's for a routine checkup, I think... yes, that's it, just a regular checkup, could you tell me what days the doctor is available?
+AGENT: thank you eleanor do you have a specific doctor you'd like to see or should i check availability with any provider
+PATIENT: I want to see... um... Doctor Smith, I think, could you check if he's available?
+AGENT: let me check doctor smith's availability for a routine checkup one moment please there are no openings with doctor smith in the next week would you like to look for a later date or are you open to seeing another provider
+PATIENT: That's a bit confusing... could you repeat that, dear? What about next week, is Doctor Smith not available at all?
+AGENT: sorry for the confusion eleanor doctor smith does not have openings this week would you like to check for later dates with doctor smith or see the next available provider sooner
+PATIENT: I'd like to see Doctor Smith, could you check for later dates, please?
+AGENT: i do not see doctor smith listed for openings next week the available doctors are zee bigneu lukaskey and kelly noble would you like to book with one of them or should i keep searching for doctor smith on later date
+PATIENT: So many names... could you say them again, slower, please?
+AGENT: i understand eleanor would you like me to keep searching for doctor smith or would you prefer to book with one of the available doctors next week
+PATIENT: I think I'll see... Doctor Kelly, was it? Could you tell me more about her?
+AGENT: doctor kelly noble is available for routine checkups next week i do not have more personal details but she is one of the main providers at pivot point orthopedics would you like to book an appointment with doctor kelly noble
+PATIENT: Yes, that sounds okay... what days is Doctor Noble available, dear?
+AGENT: doctor kelly noble has openings on friday july tenth would you like ten thirty am eleven am or eleven thirty am
+PATIENT: That's a bit too fast... could you repeat the times, please?
+AGENT: no problem eleanor doctor kelly noble has three times open on friday july tenth the first is at ten thirty in the morning the second is at eleven the third is at eleven thirty would you like one of these times
+PATIENT: I think... 10:30, yes, that sounds good, dear. Can I confirm that's on Friday, July 10th?
+AGENT: your appointment is set for friday july tenth at ten thirty am with doctor kelly noble at pivot point orthopedics
+PATIENT: That sounds right... thank you, dear, I think I've got it written down now.
+AGENT: please bring your photo id insurance card a list of your current medication
+PATIENT: What was that, dear? Could you repeat what I need to bring to the appointment?
+AGENT: please bring your photo id insurance card a list of your current medications and any imaging discs you have
+PATIENT: My photo ID, insurance card... and medications, yes... what was the other thing, dear, something about discs?
+AGENT: yes if you have any imaging discs like x rays or mris please bring those as well
+PATIENT: X-rays, MRIs... I think I have some of those at home, dear, I'll have to dig them out, can you repeat the date and time of the appointment again?
+AGENT: your appointment is friday july tenth at ten thirty am with doctor kelly noble
+PATIENT: Friday, July 10th, 10:30 am... I'll make sure to write it down, dear, thank you for helping me with the appointment.
+AGENT: you're welcome eleanor you're all set for your appointment if you need anything else just call have a great day
+PATIENT: Thank you, dear, you've been very patient with me... have a great day too!
